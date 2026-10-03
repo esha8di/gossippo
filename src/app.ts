@@ -2,7 +2,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express"
 import config from "./config";
-import  { userCreateRouter } from "./modules/user/user.router";
+import  { userRouter } from "./modules/user/user.router";
 
 
 const app:Application = express();
@@ -21,7 +21,9 @@ app.get("/", (req:Request,res:Response) => {
     res.send("Hello, World! I am Esha")
 })
 
-app.post("/app/users", userCreateRouter);
+app.use("/app/users", userRouter);
+
+
 
 export default app;
 
