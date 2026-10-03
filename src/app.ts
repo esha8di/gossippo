@@ -3,6 +3,7 @@ import cors from "cors";
 import express, { Application, Request, Response } from "express"
 import config from "./config";
 import  { userRouter } from "./modules/user/user.router";
+import {authRouter} from "./modules/auth/auth.router";
 
 
 const app:Application = express();
@@ -22,6 +23,7 @@ app.get("/", (req:Request,res:Response) => {
 })
 
 app.use("/app/users", userRouter);
+app.use("/app/auth", authRouter);
 
 
 

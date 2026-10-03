@@ -4,9 +4,9 @@ import { Request, Response } from "express";
 import httpStatus from "http-status";
 import bcrypt from "bcryptjs";
 import config from "../../config";
-import AppError from "../../utilities/AppError";
+import appError from "../../utils/appError";
 
-const createUserintoDB = async (userData: any) => {
+async function createUserintoDB(userData: any) {
     const { name, email, password, profilePhoto } = userData;
     const isUserExist = await prisma.user.findUnique({
         where: {
@@ -15,7 +15,7 @@ const createUserintoDB = async (userData: any) => {
     });
 
     if (isUserExist) {
-        throw new AppError(httpStatus.CONFLICT, "User already exists");
+        throw new appError(httpStatus.CONFLICT, "User already exists");
     }
     const hashedPassword = await bcrypt.hash(password, Number(config.bcrypt_salt_rounds));
 
@@ -37,7 +37,7 @@ const createUserintoDB = async (userData: any) => {
 
     const user = await prisma.user.findUnique({
         where: {
-            id: userCreate.id ,      
+            id: userCreate.id,
             email: userCreate.email
         },
         include: {
