@@ -50,4 +50,6 @@ async function createUserintoDB(userData: any) {
     return user;
 }
 
-export const userService = { createUserintoDB };
+async function getMyProfileFromDB() {}
+
+export const userService = { createUserintoDB, getMyProfileFromDB };

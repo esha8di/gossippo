@@ -20,4 +20,6 @@ const userRegister = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const userCreateController = { userRegister };
+const getMyProfile = catchAsync(async (req: Request, res: Response) => {});
+
+export const userCreateController = { userRegister, getMyProfile };
