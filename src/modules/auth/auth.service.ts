@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "../../lib/prisma";
 import appError from "../../utils/appError";
 import { TloginPayload } from "./auth.interface";
+import jwt from "jsonwebtoken";
 
 const userLogin = async (payload: TloginPayload) => {
     const { email, password } = payload;
@@ -20,7 +21,8 @@ const userLogin = async (payload: TloginPayload) => {
     if(!isPasswordMatched) {
         throw new appError(401, "Invalid email or password");
     }
-
+    const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {});
+    
     return user;
 
 }
