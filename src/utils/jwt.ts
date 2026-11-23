@@ -3,4 +3,14 @@ const tokenCreate = (payload: JwtPayload, secret: string, expiresIn: jwt.SignOpt
     return jwt.sign(payload, secret, { expiresIn: expiresIn } as jwt.SignOptions);
 }
 
-export const jwtUtils = { tokenCreate };
+const verifyToken = (token: string, secret: string)=>{
+    const verifiedToken = jwt.verify(token, secret);
+    try{
+        return verifiedToken;
+
+    }
+catch(err){
+    console.log(err);
+};
+}
+export const jwtUtils = { tokenCreate, verifyToken };
