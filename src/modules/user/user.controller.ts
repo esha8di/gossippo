@@ -26,7 +26,18 @@ const getMyProfile = catchAsync(async (req: Request, res: Response) => {
 
  const {accessToken} = req.cookies;
  const verifyAccessToken = jwtUtils.verifyToken(accessToken, config.jwt_access_secret);
- res.send("My profile data");
+
+ if(typeof verifyAccessToken === "string") {
+    throw new Error("Invalid access token");
+ }
+
+ const profile = await userService.getMyProfileFromDB(verifyAccessToken.id);
+ res.send({
+    status: true,
+    statusCode: httpStatus.OK,
+    message: "User profile fetched successfully",
+    data: { profile }
+ });
  console.log(verifyAccessToken);
 
 });

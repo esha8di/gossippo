@@ -50,6 +50,21 @@ async function createUserintoDB(userData: any) {
     return user;
 }
 
-async function getMyProfileFromDB() {}
+
+async function getMyProfileFromDB(id: string) {
+    const userProfile = await prisma.user.findUnique({
+        where: {
+            id
+        },
+        include: {
+            profile: true
+        },
+        omit: {
+            password: true
+        }
+    });
+    return userProfile;
+    
+}
 
 export const userService = { createUserintoDB, getMyProfileFromDB };
